@@ -5,7 +5,7 @@
 #加载环境变量
 
 function init() {
-    .  ./rolling.conf
+    .  rolling.conf
 }
 # 打tag并修改版本号
 function tag() {
@@ -119,7 +119,7 @@ function mongo() {
 }
 
 #build前端
-function build-frontend() {
+function build_frontend() {
   echo "delete frontend.bak1 frontend.bak2"
   rm -rf /home/admin/www/mo_prod/frontend.bak1 /home/admin/www/mo_prod/frontend.bak2
   echo "delete frontend.bak1 frontend.bak2 over"
