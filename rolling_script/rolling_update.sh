@@ -5,7 +5,9 @@
 #加载环境变量
 
 function init() {
-    .  rolling.conf
+    if [ -f rolling.conf ] ; then
+     source  rolling.conf
+    fi
 }
 # 打tag并修改版本号
 function tag() {

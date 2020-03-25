@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bfe163eb-8982-4401-917f-104e6079af2a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/self.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/self.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolling_script/rolling_update.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rolling_script/rolling_update.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/self.iws" beforeDir="false" afterPath="$PROJECT_DIR$/self.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/自动更新脚本/111111" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/自动更新脚本/rolling.conf" beforeDir="false" afterPath="$PROJECT_DIR$/rolling_script/rolling.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/自动更新脚本/rolling_update.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rolling_script/rolling_update.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +47,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\git\self\rolling_script" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\git\self\woker_node" />
     </key>
@@ -141,7 +141,7 @@
       <workItem from="1585105664544" duration="715000" />
       <workItem from="1585114777544" duration="5909000" />
       <workItem from="1585142179015" duration="1672000" />
-      <workItem from="1585145340540" duration="1098000" />
+      <workItem from="1585145340540" duration="1717000" />
     </task>
     <task id="LOCAL-00001" summary="上传1">
       <created>1581917203357</created>
@@ -164,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585142498062</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="修改文件夹">
+      <created>1585146475819</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585146475819</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +182,8 @@
     <MESSAGE value="上传1" />
     <MESSAGE value="更新脚本" />
     <MESSAGE value="更新安装docker,配置sudo脚本" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新安装docker,配置sudo脚本" />
+    <MESSAGE value="修改文件夹" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改文件夹" />
   </component>
   <component name="WindowStateProjectService">
     <state x="477" y="14" key="#1" timestamp="1585145086204">
@@ -190,10 +198,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1585145661842" />
-    <state x="372" y="6" key="CommitChangelistDialog2" timestamp="1585142497457">
+    <state x="372" y="6" key="CommitChangelistDialog2" timestamp="1585146475236">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="372" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1585142497457" />
+    <state x="372" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1585146475236" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1581917257150">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -230,14 +238,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="616" y="116" key="VCS.ChangeListViewerDialog/0.0.1536.824@0.0.1536.824" timestamp="1581917250310" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585142514999">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585146485292">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585142514999" />
-    <state x="562" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584965758587">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585146485292" />
+    <state x="562" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585146480345">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="562" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1584965758587" />
+    <state x="562" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1585146480345" />
     <state x="178" y="0" key="new project wizard" timestamp="1582346918732">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
