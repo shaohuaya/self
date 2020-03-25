@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BashSupportProjectSettings">
+    <option name="globalVariables">
+      <set>
+        <option value="CONFIGJS" />
+        <option value="CONSTANTSPY" />
+        <option value="ENV" />
+        <option value="INITPY" />
+        <option value="JUPYTERHUBCONFIGPY" />
+        <option value="MO_HOME" />
+        <option value="OS" />
+        <option value="PIPERRORLOG" />
+        <option value="REQUESTTS" />
+        <option value="REQUIREMENTSTXT" />
+        <option value="SCRIPT_DIR" />
+      </set>
+    </option>
+  </component>
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />

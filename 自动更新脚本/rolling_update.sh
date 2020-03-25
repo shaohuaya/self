@@ -1,46 +1,19 @@
 #!/usr/bin/env bash
 
 
-MO_HOME="/home/admin/www/mo_prod"
-CONSTANTSPY="${MO_HOME}/pyserver/server3/constants.py"
-CONFIGJS="${MO_HOME}/frontend/config.js"
-CONFIGINI="${MO_HOME}/pyserver/server3/repository/config.ini"
-INITPY="${MO_HOME}/pyserver/functions/template/python3/function/modules/__init__.py"
-REQUIREMENTSTXT="${MO_HOME}/pyserver/requirements.txt"
-JUPYTERHUBCONFIGPY="${MO_HOME}/pyserver/jupyterhub/jupyterhub_config.py"
-PIPERRORLOG="/home/admin/script/pip_error.log"
-ENV="MO"
-OS="Linux"
-DOCKER_IMAGE="magicalion/singleuser:latest"
-DOCKER_JOB_IMAGE="magicalion/singleuser-job:latest"
-DOCKER_JOB_GPU_IMAGE="magicalion/singleuser-job:latest-gpu"
-DOCKER_FAAS_PYTHON3_IMAGE="magicalion/faas-python3:latest"
-DOCKER_CELERY_APP_IMAGE="magicalion/celery-app:latest"
-GIT_BRANCH="master"
-WEB_ROOT="/home/admin/www/mo_prod/frontend/dist"
-WEB_ROOT_TMP="/home/admin/www/webroot_tmp"
-NGINX_CONF="/etc/nginx/conf.d/default.conf"
-KLAUS_HOME="/home/admin/www/klaus"
-REQUESTTS="/home/admin/www/mo_prod/frontend/src/packages/jupyterlab_package/packages/services/lib/request.js"
-
-
-
-
-
-
 #需要先拉好代码
 #加载环境变量
 
 function init() {
-    source rolling.conf
+    .  ./rolling.conf
 }
 # 打tag并修改版本号
 function tag() {
   read -p "Enter version number:" versionnum
-  cd $MO_HOME
-  git tag -a "$versionnum"
-  git push
-  #修改版本号
+#  cd $MO_HOME
+#  git tag -a "$versionnum"
+#  git push
+#  修改版本号
   sed -i "s/betaVersion.*/betaVersion: \'$versionnum\'/g" /home/admin/www/mo_prod/frontend/src/constants.js
 }
 
@@ -145,11 +118,7 @@ function mongo() {
     sed -i '/[MO]/{n;s/127.0.0.1/192.168.1.73/;}' /home/admin/www/mo_prod/pyserver/server3/repository/config.ini
 }
 
-
-
-
 #build前端
-
 function build-frontend() {
   echo "delete frontend.bak1 frontend.bak2"
   rm -rf /home/admin/www/mo_prod/frontend.bak1 /home/admin/www/mo_prod/frontend.bak2
