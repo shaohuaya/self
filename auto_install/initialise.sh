@@ -69,4 +69,13 @@ chronyc sources
 #修改用户名
 #hostnamectl set-hostname $1
 
+#代码补全
+yum install -y bash-completion
 
+sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+source /etc/bash_completion.d/docker-compose
+
+yum install -y bash-completion
+source /usr/share/bash-completion/bash_completion
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
