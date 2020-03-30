@@ -16,14 +16,16 @@ EOF
 
 #4)安装kubectl，kubelet，kubeadm
 #Mater安装
-read -p "此节点为:1.master节点 2.woker节点" $chose
+read -p "此节点为:1.master节点 2.woker节点:" chose
 case $chose in
 1)
     yum install -y kubelet-1.15.3 kubeadm-1.15.3 kubectl-1.15.3
+    systemctl enable kubelet
     ;;
 
 2)
     yum install -y kubelet-1.15.3 kubeadm-1.15.3
+    systemctl enable kubelet
     ;;
 
 esac
