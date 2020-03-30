@@ -63,7 +63,7 @@ logdir /var/log/chrony
 
 EOF
 systemctl enable chronyd.service
-systemctl start chronyd.service
+systemctl restart chronyd.service
 chronyc sources
 
 #修改用户名
