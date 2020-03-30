@@ -1,0 +1,8 @@
+rm -rf        "pyserver/user_directory/.CourseTemplate/Decision tree/决策树.ipynb"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Regression analysis/回归分析.ipynb"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Search-based problem solving/基于搜索的问题求解.ipynb"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Bayesian analysis - Advanced/mnist.npz"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Bayesian analysis - Advanced/贝叶斯分析.ipynb"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Neural network learning - Advanced/mnist.npz"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Neural network learning - Advanced/神经网络学习.ipynb"
+rm -rf        "pyserver/user_directory/.CourseTemplate/Regression analysis/housing.csv"

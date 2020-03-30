@@ -3,7 +3,6 @@
 
 #需要先拉好代码
 #加载环境变量
-
 function init() {
     if [ -f rolling.conf ] ; then
      source  rolling.conf
@@ -115,10 +114,9 @@ function modify_config_files(){
 }
 
 #修改数据库的地址指向（需要加一个判断防止误改）
-function mongo() {
-
-    sed -i '/[MO]/{n;s/127.0.0.1/192.168.1.73/;}' /home/admin/www/mo_prod/pyserver/server3/repository/config.ini
-}
+#function mongo() {
+#    sed -i '/[MO]/{n;s/127.0.0.1/192.168.1.73/;}' /home/admin/www/mo_prod/pyserver/server3/repository/config.ini
+#}
 
 #build前端
 function build_frontend() {
