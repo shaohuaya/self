@@ -5,7 +5,7 @@
 #加载环境变量
 function init() {
     if [[ -f rolling.conf ]] ; then
-     source  rolling.conf
+     source  ./rolling.conf
     fi
 }
 # 打tag并修改版本号
@@ -191,32 +191,31 @@ function change_nginx_back(){
 function restart_backend() {
     pm2 restart run
 }
-read -p "请输入数字来选择你要做的：1.部署前端2.部署后端3.抢救前端"
-case $1 in
+read -p "请输入数字来选择你要做的：1.部署前端 2.准备部署后端(拉代码之前) 3.部署后端(拉完代码之后执行) 4.抢救前端  5.重启脚本 " I
+case $I in
  1)
         echo "部署前端"
         init
         tag
         modify_config_files
-        build-frontend
+        build_frontend
         upload_files_to_oss
         restart_supervisor
         ;;
  2)
-        echo "部署后端"
-        init
+        echo "准备部署后端(拉代码之前)"
         change_nginx
+        ;;
+ 3)
+        echo "部署后端(拉完代码之后执行)"
+        init
         modify_config_files
         install_python_packages
         restart_backend
-        change_nginx_back
         ;;
- 3)
+ 4)
         echo "抢救build错了的前端"
         help_build
         ;;
-
-
-
 esac
 
