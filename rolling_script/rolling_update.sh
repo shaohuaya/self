@@ -4,18 +4,18 @@
 #需要先拉好代码
 #加载环境变量
 function init() {
-    if [ -f rolling.conf ] ; then
+    if [[ -f rolling.conf ]] ; then
      source  rolling.conf
     fi
 }
 # 打tag并修改版本号
 function tag() {
-  read -p "Enter version number:" versionnum
-#  cd $MO_HOME
-#  git tag -a "$versionnum"
-#  git push
+  read -p "Enter version number:" VersionNum
+  cd $MO_HOME
+  git tag -a "$VersionNum" -m "更新版本"
+  git push origin "$VersionNum"
 #  修改版本号
-  sed -i "s/betaVersion.*/betaVersion: \'$versionnum\'/g" /home/admin/www/mo_prod/frontend/src/constants.js
+  sed -i "s/betaVersion.*/betaVersion: \'$VersionNum\'/g" /home/admin/www/mo_prod/frontend/src/constants.js
 }
 
 
@@ -148,6 +148,16 @@ function upload_files_to_oss(){
 #然后重启supervisor里的所有服务除了hub
 function restart_supervisor() {
   supervisorctl restart git
+  supervisorctl restart crash
+  supervisorctl restart email_sender
+  supervisorctl restart job_service
+  supervisorctl restart klaus
+  supervisorctl restart kube_job_cleaner
+  superviserctl restart live_celery
+  superviserctl restart notebook_auto_test
+  superviserctl restart pods_cleaner
+  superviserctl restart schedule_snap_uaa
+  superviserctl restart temp_user_creator
   echo "restart ok"
 }
 
@@ -165,6 +175,22 @@ function install_python_packages(){
     echo "install complete..."
 }
 
+function change_nginx(){
+    VAR="eth0"
+    HOST_IP=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    ssh production "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/' /etc/nginx/conf.d/default.conf"
+    ssh production "sudo nginx -s reload"
+}
+
+function change_nginx_back(){
+    VAR="eth0"
+    HOST_IP=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    ssh production "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/' /etc/nginx/conf.d/default.conf"
+    ssh production "sudo nginx -s reload"
+}
+function restart_backend() {
+    pm2 restart run
+}
 read -p "请输入数字来选择你要做的：1.部署前端2.部署后端3.抢救前端"
 case $1 in
  1)
@@ -172,7 +198,6 @@ case $1 in
         init
         tag
         modify_config_files
-        mongo
         build-frontend
         upload_files_to_oss
         restart_supervisor
@@ -180,42 +205,18 @@ case $1 in
  2)
         echo "部署后端"
         init
+        change_nginx
         modify_config_files
         install_python_packages
+        restart_backend
+        change_nginx_back
         ;;
  3)
         echo "抢救build错了的前端"
         help_build
         ;;
 
-# *)
-#        echo "请使用1,2,3"
-#        exit 1
 
- 4)
-        echo "抢救build错了的前端"
-        init
-        modify_config_files
-        ;;
- 5)
-        echo "抢救build错了的前端"
-        mongo
-        tag
-        ;;
- 6)
-        echo "抢救build错了的前端"
-        init
-        build
-        ;;
- 7)
-        echo "抢救build错了的前端"
-        init
-        restart_supervisor
-        ;;
- 8)
-        echo "抢救build错了的前端"
-        init
-        help_build
-        ;;
+
 esac
 
