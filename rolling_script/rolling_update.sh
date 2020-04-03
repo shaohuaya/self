@@ -16,6 +16,7 @@ function tag() {
   git push origin "$VersionNum"
 #  修改版本号
   sed -i "s/betaVersion.*/betaVersion: \'$VersionNum\'/g" /home/admin/www/mo_prod/frontend/src/constants.js
+  git push
 }
 
 
@@ -191,19 +192,58 @@ function change_nginx_back(){
 function restart_backend() {
     pm2 restart run
 }
-read -p "请输入数字来选择你要做的：1.部署前端 2.准备部署后端(拉代码之前) 3.部署后端(拉完代码之后执行) 4.抢救前端  5.重启脚本 " I
+
+
+function zju_change_nginx() {
+    #更前端1和后端1,更新前跑一下避免影响正常运行
+    VAR="eth0"
+    HOST_IP1=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    #修改反向代理nginx
+    ssh root@frontend "sudo sed -i 's/server $HOST_IP1:8899;/server $HOST_IP1:8899 down;/' /etc/nginx/conf.d/default.conf"
+    ssh root@frontend "sudo nginx -s reload"
+    #修改前端2只指向一个后端2
+    HOSTNAME=`hostname`
+    if [[ $HOSTNAME == "k8s-master1" ]]; then
+        ssh root@k8s-master2 "sudo sed -i 's/server 10.200.11.133:5005 max_fails=3 fail_timeout=10s weight=4/& down/' /etc/nginx/conf.d/default.conf"
+        ssh root@k8s-master2 "nginx -s reload"
+        else
+            ssh root@k8s-master1 "sudo sed -i 's/server 10.200.11.134:5005 max_fails=3 fail_timeout=10s weight=4/& down/' /etc/nginx/conf.d/default.conf"
+            ssh root@k8s-master1 "nginx -s reload"
+    fi
+}
+
+function zju_change_nginx_back() {
+    VAR="eth0"
+    HOST_IP1=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    #修改反向代理nginx
+    ssh root@frontend "sudo sed -i 's/server $HOST_IP1:8899 down;/server $HOST_IP1:8899;/' /etc/nginx/conf.d/default.conf"
+    ssh root@frontend "sudo nginx -s reload"
+    HOSTNAME=`hostname`
+    if [[ $HOSTNAME == "k8s-master1" ]]; then
+        ssh root@k8s-master2 "sudo sed -i 's/server 10.200.11.133:5005 max_fails=3 fail_timeout=10s weight=4 down;/sudo sed -i 's/server 10.200.11.133:5005 max_fails=3 fail_timeout=10s weight=4;/' /etc/nginx/conf.d/default.conf"
+        ssh root@k8s-master2 "nginx -s reload"
+        else
+            ssh root@k8s-master1 "sudo sed -i 's/server 10.200.11.134:5005 max_fails=3 fail_timeout=10s weight=4 down;/server 10.200.11.134:5005 max_fails=3 fail_timeout=10s weight=4;/' /etc/nginx/conf.d/default.conf"
+            ssh root@k8s-master1 "nginx -s reload"
+    fi
+}
+
+
+
+
+
+read -p "请输入数字来选择你要做的：1.部署前端 2.准备部署后端(拉代码之前) 3.部署后端(拉完代码之后执行) 4.抢救前端  5.上传到云    6打tag,修改版本号 " I
 case $I in
  1)
         echo "部署前端"
         init
-        tag
         modify_config_files
         build_frontend
         upload_files_to_oss
         restart_supervisor
         ;;
  2)
-        echo "准备部署后端(拉代码之前)"
+        echo "准备部署后端更改nginx配置(拉代码之前)"
         change_nginx
         ;;
  3)
@@ -216,6 +256,13 @@ case $I in
  4)
         echo "抢救build错了的前端"
         help_build
+        upload_files_to_oss
+        ;;
+ 5)     echo "上传到云"
+        upload_files_to_oss
+        ;;
+ 6)     echo "打tag,修改版本号"
+        tag
         ;;
 esac
 
