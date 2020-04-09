@@ -58,7 +58,7 @@ function modify_config_files(){
 
     echo "modify result"
     echo "`cat ${CONFIGJS} | grep -A 10 '^module\.exports'`"
-# modify __init__.py
+    # modify __init__.py
     echo "modify __init__.py"
     # 将其他没被注释的ENV注释起来
     sed -i "s/^[[:space:]]*\(ENV = '.*'\)/# \1/i" ${INITPY}
@@ -81,24 +81,24 @@ function modify_config_files(){
     echo "modify jupyterhub_config.py"
 
     # 将其他没被注释的ENV注释起来
-    sed -i "s/^[[:space:]]*\(ENV = '.*'\)/# \1/i" ${JUPYTERHUBCONFIGPY}
-
-    # 将# ENV = '${ENV}'的注释去掉
-    sed -i "s/#[[:space:]]*\(ENV = '${ENV}'\)/\1/i" ${JUPYTERHUBCONFIGPY}
-  sed -i "s/^[[:space:]]*\(ENV = '.*'\)/# \1/i" ${JUPYTERHUBCONFIGPY}
-
-  # 将# ENV = '${ENV}'的注释去掉
-    sed -i "s/#[[:space:]]*\(ENV = '${ENV}'\)/\1/i" ${JUPYTERHUBCONFIGPY}
-
-    # 如果没有抓取到ENV = '${ENV}'
-    if ! grep "ENV = '${ENV}'" ${JUPYTERHUBCONFIGPY} &>> /dev/null; then
-            # 就报错并退出程序
-            echo "can't find ENV = '${ENV}' in ${JUPYTERHUBCONFIGPY}"
-            exit 2
-    fi
-
-    echo "modify result"
-    echo "`cat ${JUPYTERHUBCONFIGPY} | grep -C 5 ${ENV}`"
+#    sed -i "s/^[[:space:]]*\(ENV = '.*'\)/# \1/i" ${JUPYTERHUBCONFIGPY}
+#
+#    # 将# ENV = '${ENV}'的注释去掉
+#    sed -i "s/#[[:space:]]*\(ENV = '${ENV}'\)/\1/i" ${JUPYTERHUBCONFIGPY}
+#    sed -i "s/^[[:space:]]*\(ENV = '.*'\)/# \1/i" ${JUPYTERHUBCONFIGPY}
+#
+#  # 将# ENV = '${ENV}'的注释去掉
+#    sed -i "s/#[[:space:]]*\(ENV = '${ENV}'\)/\1/i" ${JUPYTERHUBCONFIGPY}
+#
+#    # 如果没有抓取到ENV = '${ENV}'
+#    if ! grep "ENV = '${ENV}'" ${JUPYTERHUBCONFIGPY} &>> /dev/null; then
+#            # 就报错并退出程序
+#            echo "can't find ENV = '${ENV}' in ${JUPYTERHUBCONFIGPY}"
+#            exit 2
+#    fi
+#
+#    echo "modify result"
+#    echo "`cat ${JUPYTERHUBCONFIGPY} | grep -C 5 ${ENV}`"
     # modify request.ts
     echo "modify request.ts"
     # 将其他没被注释的ENV注释起来
@@ -132,8 +132,8 @@ function build_frontend() {
   docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm run build
   echo "build前端over"
   sudo chown -R admin.admin /home/admin/www/mo_prod/frontend.bak/dist
-  mv frontend frontend.bak1
-  mv frontend.bak frontend
+  mv /home/admin/www/mo_prod/frontend /home/admin/www/mo_prod/frontend.bak1
+  mv /home/admin/www/mo_prod/frontend.bak /home/admin/www/mo_prod/frontend
 }
 #抢救build错了的前端
 function help_build() {
@@ -233,51 +233,32 @@ function zju_change_nginx_back() {
 
 
 
-read -p "请输入数字来选择你要做的：1.打tag,修改版本号 2.部署前端 3.准备部署后端(拉代码之前) 4.部署后端(拉完代码之后执行) 5.抢救前端  6.上传到云 7.restart supervisor的脚本  8.ZJU 部署前端\
-9.ZJU部署后端拉代码前更改nginx 10.ZJU拉完后端之后更改nginx " I
+read -p "请输入数字来选择你要做的：   1.ZJU 部署前端 2.ZJU部署后端拉代码前更改nginx 3.部署后端并安装包 4.ZJU拉完后端之后更改nginx 5.restart supervisor的脚本" I
 case $I in
- 2)
-        echo "部署前端"
+
+
+ 1)     echo "部署ZJU前端"
         init
         modify_config_files
         build_frontend
         ;;
- 3)
-        echo "准备部署后端更改nginx配置(拉代码之前)"
-        change_nginx
+ 2)     echo "ZJU更改nginx配置"
+        zju_change_nginx
         ;;
- 4)
-        echo "部署后端(拉完代码之后执行)"
+ 3)     echo "安装python包"
         init
         modify_config_files
         install_python_packages
         restart_backend
+        echo "完毕"
         ;;
- 5)
-        echo "抢救build错了的前端"
-        help_build
-        upload_files_to_oss
+ 4)     echo "ZJU恢复nginx配置"
+        zju_change_nginx_back
+        echo "完毕"
         ;;
- 6)     echo "上传到云"
-        upload_files_to_oss
-        echo "上传完毕"
-        ;;
- 1)     echo "打tag,修改版本号"
-        tag
-        echo "tag打完并推到github了"
-        ;;
- 7)     echo "重启supervisor的脚本"
+ 5)     echo "重启supervisor的脚本"
         restart_supervisor
         echo "重启完成"
-        ;;
- 8)     echo "部署ZJU前端"
-        build_frontend
-        ;;
- 9)     echo "ZJU更改nginx配置"
-        zju_change_nginx
-        ;;
- 10)    echo "ZJU恢复nginx配置"
-        zju_change_nginx_back
         ;;
 esac
 
