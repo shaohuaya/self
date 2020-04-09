@@ -128,7 +128,8 @@ function build_frontend() {
   cp -r /home/admin/www/mo_prod/frontend /home/admin/www/mo_prod/frontend.bak
   echo "copy frontend over"
   echo "build前端"
-  docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host 192.168.31.11:5000/frontend:dev npm run build
+  docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm i
+  docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm run build
   echo "build前端over"
   sudo chown -R admin.admin /home/admin/www/mo_prod/frontend.bak/dist
   mv frontend frontend.bak1
@@ -232,37 +233,51 @@ function zju_change_nginx_back() {
 
 
 
-read -p "请输入数字来选择你要做的：1.部署前端 2.准备部署后端(拉代码之前) 3.部署后端(拉完代码之后执行) 4.抢救前端  5.上传到云    6打tag,修改版本号 " I
+read -p "请输入数字来选择你要做的：1.打tag,修改版本号 2.部署前端 3.准备部署后端(拉代码之前) 4.部署后端(拉完代码之后执行) 5.抢救前端  6.上传到云 7.restart supervisor的脚本  8.ZJU 部署前端\
+9.ZJU部署后端拉代码前更改nginx 10.ZJU拉完后端之后更改nginx " I
 case $I in
- 1)
+ 2)
         echo "部署前端"
         init
         modify_config_files
         build_frontend
-        upload_files_to_oss
-        restart_supervisor
         ;;
- 2)
+ 3)
         echo "准备部署后端更改nginx配置(拉代码之前)"
         change_nginx
         ;;
- 3)
+ 4)
         echo "部署后端(拉完代码之后执行)"
         init
         modify_config_files
         install_python_packages
         restart_backend
         ;;
- 4)
+ 5)
         echo "抢救build错了的前端"
         help_build
         upload_files_to_oss
         ;;
- 5)     echo "上传到云"
+ 6)     echo "上传到云"
         upload_files_to_oss
+        echo "上传完毕"
         ;;
- 6)     echo "打tag,修改版本号"
+ 1)     echo "打tag,修改版本号"
         tag
+        echo "tag打完并推到github了"
+        ;;
+ 7)     echo "重启supervisor的脚本"
+        restart_supervisor
+        echo "重启完成"
+        ;;
+ 8)     echo "部署ZJU前端"
+        build_frontend
+        ;;
+ 9)     echo "ZJU更改nginx配置"
+        zju_change_nginx
+        ;;
+ 10)    echo "ZJU恢复nginx配置"
+        zju_change_nginx_back
         ;;
 esac
 
