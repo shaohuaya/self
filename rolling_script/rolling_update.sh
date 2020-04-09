@@ -168,7 +168,7 @@ function install_python_packages(){
     # venvwrapper
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
     export WORKON_HOME=${HOME}/.virtualenvs
-    source /usr/bin/virtualenvwrapper.sh
+    source /usr/local/bin/virtualenvwrapper.sh
     workon moenv
     if ! pip install -r ${REQUIREMENTSTXT} 2> ${PIPERRORLOG} > /dev/null; then
     cat ${PIPERRORLOG}
