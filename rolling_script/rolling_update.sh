@@ -248,7 +248,7 @@ function zju_change_nginx_backend_back() {
 
 
 
-read -p "请输入数字来选择:1.ZJU 部署前端 2.ZJU部署后端拉代码前更改nginx 3.部署后端并安装包 4.ZJU拉完后端之后更改nginx 5.restart supervisor的脚本 " I 
+read -p "请输入数字来选择:1.ZJU 部署前端 2.ZJU部署后端拉代码前更改nginx 3.部署后端并安装包 4.ZJU拉完后端之后更改nginx 5.restart supervisor的脚本 6.改配置文件 " I
 case $I in
 
 
@@ -273,6 +273,10 @@ case $I in
         ;;
  5)     echo "重启supervisor的脚本"
         restart_supervisor
+        echo "重启完成"
+        ;;
+ 6)     echo "改配置文件"
+        modify_config_files
         echo "重启完成"
         ;;
 esac
