@@ -122,10 +122,10 @@ function modify_config_files(){
 #build前端
 function build_frontend() {
   echo "delete frontend.bak1 frontend.bak2"
-  rm -rf /home/admin/www/mo_prod/frontend.bak1 /home/admin/www/mo_prod/frontend.bak2
+  sudo rm -rf /home/admin/www/mo_prod/frontend.bak1 /home/admin/www/mo_prod/frontend.bak2
   echo "delete frontend.bak1 frontend.bak2 over"
   echo "copy frontend"
-  cp -r /home/admin/www/mo_prod/frontend /home/admin/www/mo_prod/frontend.bak
+  sudo cp -r /home/admin/www/mo_prod/frontend /home/admin/www/mo_prod/frontend.bak
   echo "copy frontend over"
   echo "build前端"
   docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm i
