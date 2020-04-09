@@ -276,6 +276,7 @@ case $I in
         echo "重启完成"
         ;;
  6)     echo "改配置文件"
+        init
         modify_config_files
         echo "重启完成"
         ;;
