@@ -233,7 +233,7 @@ function zju_change_nginx_back() {
 
 
 
-read -p "请输入数字来选择你要做的：   1.ZJU 部署前端 2.ZJU部署后端拉代码前更改nginx 3.部署后端并安装包 4.ZJU拉完后端之后更改nginx 5.restart supervisor的脚本" I
+read -p "请输入数字来选择:1.ZJU 部署前端 2.ZJU部署后端拉代码前更改nginx 3.部署后端并安装包 4.ZJU拉完后端之后更改nginx 5.restart supervisor的脚本 " I 
 case $I in
 
 
