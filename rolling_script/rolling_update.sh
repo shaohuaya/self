@@ -149,17 +149,17 @@ function upload_files_to_oss(){
 
 #然后重启supervisor里的所有服务除了hub
 function restart_supervisor() {
-  supervisorctl restart git
-  supervisorctl restart crash
-  supervisorctl restart email_sender
-  supervisorctl restart job_service
-  supervisorctl restart klaus
-  supervisorctl restart kube_job_cleaner
-  superviserctl restart live_celery
-  superviserctl restart notebook_auto_test
-  superviserctl restart pods_cleaner
-  superviserctl restart schedule_snap_uaa
-  superviserctl restart temp_user_creator
+  sudo supervisorctl restart git
+  sudo supervisorctl restart crash
+  sudo supervisorctl restart email_sender
+  sudo supervisorctl restart job_service
+  sudo supervisorctl restart klaus
+  sudo supervisorctl restart kube_job_cleaner
+  sudo superviserctl restart live_celery
+  sudo superviserctl restart notebook_auto_test
+  sudo superviserctl restart pods_cleaner
+  sudo superviserctl restart schedule_snap_uaa
+  sudo superviserctl restart temp_user_creator
   echo "restart ok"
 }
 
@@ -278,7 +278,7 @@ case $I in
  6)     echo "改配置文件"
         init
         modify_config_files
-        echo "重启完成"
+        echo "完成"
         ;;
 esac
 
