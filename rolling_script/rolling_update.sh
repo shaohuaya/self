@@ -229,7 +229,22 @@ function zju_change_nginx_back() {
     fi
 }
 
-
+function zju_change_nginx_backend() {
+    VAR="eth0"
+    HOST_IP=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    ssh k8s-master1 "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/' /etc/nginx/conf.d/default.conf"
+    ssh k8s-master1 "sudo nginx -s reload"
+    ssh k8s-master2 "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/' /etc/nginx/conf.d/default.conf"
+    ssh k8s-master2 "sudo nginx -s reload"
+}
+function zju_change_nginx_backend_back() {
+    VAR="eth0"
+    HOST_IP=$(ifconfig eth0|grep netmask|awk '{print $2}')
+    ssh k8s-master1 "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/' /etc/nginx/conf.d/default.conf"
+    ssh k8s-master1 "sudo nginx -s reload"
+    ssh k8s-master2 "sudo sed -i 's/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4 down/server $HOST_IP:5005 max_fails=3 fail_timeout=10s weight=4/' /etc/nginx/conf.d/default.conf"
+    ssh k8s-master2 "sudo nginx -s reload"
+}
 
 
 
@@ -243,7 +258,7 @@ case $I in
         build_frontend
         ;;
  2)     echo "ZJU更改nginx配置"
-        zju_change_nginx
+        zju_change_nginx_backend
         ;;
  3)     echo "安装python包"
         init
@@ -253,7 +268,7 @@ case $I in
         echo "完毕"
         ;;
  4)     echo "ZJU恢复nginx配置"
-        zju_change_nginx_back
+        zju_change_nginx_backend_back
         echo "完毕"
         ;;
  5)     echo "重启supervisor的脚本"
