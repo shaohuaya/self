@@ -131,7 +131,7 @@ function build_frontend() {
   docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm i
   docker run --rm --name frontend -it -v /home/admin/www/mo_prod/frontend.bak:/opt/app-root/src/www/mo_prod/frontend --network host magicalion/pyserver:frontend-mo-box npm run build
   echo "build前端over"
-  sudo chown -R admin.admin /home/admin/www/mo_prod/frontend.bak/dist
+  sudo chown -R admin.admin /home/admin/www/mo_prod/frontend.bak
   mv /home/admin/www/mo_prod/frontend /home/admin/www/mo_prod/frontend.bak1
   mv /home/admin/www/mo_prod/frontend.bak /home/admin/www/mo_prod/frontend
 }
