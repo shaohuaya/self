@@ -233,8 +233,7 @@ function zju_change_nginx_back() {
 
 
 
-read -p "请输入数字来选择你要做的：1.打tag,修改版本号 2.部署前端 3.准备部署后端(拉代码之前) 4.部署后端(拉完代码之后执行) 5.抢救前端  6.上传到云 7.restart supervisor的脚本  8.ZJU 部署前端\
-9.ZJU部署后端拉代码前更改nginx 10.ZJU拉完后端之后更改nginx " I
+read -p "请输入数字来选择你要做的：1.打tag,修改版本号 2.部署前端 3.准备部署后端(拉代码之前) 4.部署后端(拉完代码之后执行) 5.抢救前端  6.上传到云 7.restart supervisor的脚本 " I
 case $I in
  2)
         echo "部署前端"
@@ -269,15 +268,6 @@ case $I in
  7)     echo "重启supervisor的脚本"
         restart_supervisor
         echo "重启完成"
-        ;;
- 8)     echo "部署ZJU前端"
-        build_frontend
-        ;;
- 9)     echo "ZJU更改nginx配置"
-        zju_change_nginx
-        ;;
- 10)    echo "ZJU恢复nginx配置"
-        zju_change_nginx_back
         ;;
 esac
 
