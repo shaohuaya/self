@@ -155,11 +155,11 @@ function restart_supervisor() {
   sudo supervisorctl restart job_service
   sudo supervisorctl restart klaus
   sudo supervisorctl restart kube_job_cleaner
-  sudo superviserctl restart live_celery
-  sudo superviserctl restart notebook_auto_test
-  sudo superviserctl restart pods_cleaner
-  sudo superviserctl restart schedule_snap_uaa
-  sudo superviserctl restart temp_user_creator
+  sudo supervisorctl restart live_celery
+  sudo supervisorctl restart notebook_auto_test
+  sudo supervisorctl restart pods_cleaner
+  sudo supervisorctl restart schedule_snap_uaa
+  sudo supervisorctl restart temp_user_creator
   echo "restart ok"
 }
 

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - port: 9292
+  type: NodePort
+
+
+
+mkdir /mnt/modules
+mkdir /mnt/datasets
+mkdir /mnt/functions
+mkdir /mnt/job_staging
+mkdir /mnt/user_directory
+mkdir /mnt/submissions
+mkdir /mnt/recording
+mkdir /mnt/competition
